@@ -40,7 +40,7 @@
             step: function (results) {
               console.log("Fila procesada:", results.data); // Procesar fila por fila
             },
-            complete: function () {
+            complete: function (resutls) {
               console.log("Procesamiento del CSV completado.");
               matriz = results.data;
             },
