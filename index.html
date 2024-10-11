@@ -57,11 +57,12 @@
             result = await queryByCode(code);
 
             console.log("Resultado:", result);
-          })();          
 
-          resultContainer.innerHTML =
+            resultContainer.innerHTML =
             '<div>CODE: ' + result['id'] + '</div>' +
             '<div>Image: <img src="' + result['image_nutrition_url'] + '"/></div>';
+
+          })();          
         }
       }
 
