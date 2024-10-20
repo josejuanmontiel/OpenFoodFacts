@@ -22,4 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+wip/*
 spain_products.csv
+spain_products.csv.backup
+spain_products_ingredients.csv
+spain_products_ingredients.csv.backup
