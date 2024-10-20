@@ -20,7 +20,14 @@ export default defineConfig({
     reportCompressedSize: false,
     // Evitar convertir archivos grandes en base64
     assetsInlineLimit: 0, // No convertir archivos en base64 si son grandes
+    rollupOptions: {
+      input: {
+        index: path.resolve(__dirname, 'src/index.html'),
+        grid: path.resolve(__dirname, 'src/grid.html'),
+      }
+    },
   },
+  publicDir: 'public',
   watch: {
     usePolling: true, // Para manejar grandes cantidades de archivos en desarrollo
     interval: 1000,   // Intervalo para el polling
