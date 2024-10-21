@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <script src="./js/papaparse.min.js" type="text/javascript"></script>
+  <script src="./js/pako_inflate.min.js"></script>
+
+  <title>Vite App</title>
+</head>
+
+<body>
+  <button id="download-btn">Descargar BD</button>
+  <button id="clear-db-btn">Borrar BD</button>
+  <h2>Consultar por Código</h2>
+  <input type="text" id="code-input" placeholder="Ingresa el código" />
+  <button id="query-btn">Consultar</button>
+  <pre id="result"></pre>
+  <script src="./js/script.js"></script>
+  <div id="qr-reader" style="width:500px"></div>
+  <div id="qr-reader-results"></div>
+  <script>
+    var matriz;
+
+    function docReady(fn) {
+      // see if DOM is already available
+      if (document.readyState === "complete"
+        || document.readyState === "interactive") {
+        // call on next available tick
+        setTimeout(fn, 1);
+      } else {
+        document.addEventListener("DOMContentLoaded", fn);
+      }
+    }
+
+    docReady(function () {
+      var resultContainer = document.getElementById('qr-reader-results');
+      var lastResult, countResults = 0;
+      function onScanSuccess(decodedText, decodedResult) {
+        if (decodedText !== lastResult) {
+          ++countResults;
+          lastResult = decodedText;
+          // Handle on success condition with the decoded message.
+          console.log(`Scan result ${decodedText}`, decodedResult.result.text);
+
+          const code = decodedResult.result.text;
+          
+          var result;
+
+          // IIFE asíncrona para ejecutar await en el bloque global
+          (async () => {
+            console.log("Esperando los datos...");
+
+            result = await queryByCode(code);
+
+            console.log("Resultado:", result);
+
+            resultContainer.innerHTML =
+            '<div>CODE: ' + result['id'] + '</div>' +
+            '<div>Image: <img src="' + result['image_nutrition_url'] + '"/></div>';
+
+          })();          
+        }
+      }
+
+      var html5QrcodeScanner = new Html5QrcodeScanner(
+        "qr-reader", { fps: 10, qrbox: 250 });
+      html5QrcodeScanner.render(onScanSuccess);
+    });
+  </script>
+</body>
+
+</html>

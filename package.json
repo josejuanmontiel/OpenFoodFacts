@@ -15,7 +15,9 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
+    "luxon": "^3.5.0",
     "papaparse": "^5.4.1",
-    "serve": "^14.2.4"
+    "serve": "^14.2.4",
+    "tabulator-tables": "^6.3.0"
   }
 }
