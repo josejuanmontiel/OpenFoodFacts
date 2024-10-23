@@ -24,6 +24,7 @@ export default defineConfig({
       input: {
         index: path.resolve(__dirname, 'src/index.html'),
         grid: path.resolve(__dirname, 'src/grid.html'),
+        scan: path.resolve(__dirname, 'src/scan.html'),
       }
     },
   },
