@@ -79,7 +79,7 @@
     </header>
 
     <main class="px-3">
-      <h1>¿Como funciona? <button type="button" class="btn btn-success">Ya se como va</button></h1>
+      <h1>¿Como funciona? <button type="button" class="btn btn-success" id="ya-se">Ya se como va</button></h1>
       
       <p class="lead">Esta aplicacion se ha inspirada en la charla <a href="https://www.youtube.com/watch?v=j5dUzDTQ3mc">Taller de Nutrición: Etiquetado Nutricional</a>
         de la fundacion <a href="https://www.fundacionuapo.org/">UAPO</a></p> 
@@ -89,8 +89,9 @@
 
       <div class="container text-center">
         <div class="row">
-          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px">Ingrediente 1
-Ingrediente 2
+          <textarea class="form-control" placeholder="Leave a comment here" 
+          id="filters" style="height: 100px">nicht |
+Ingrediente 2 |
 Ingrediente 3</textarea>
         </div>
         <div class="row">
@@ -104,7 +105,7 @@ Ingrediente 3</textarea>
                   type="text"
                   class="form-control"
                   id="database"
-                  aria-describedby="button-addon1" value="/spain_products.csv.zz"></input>
+                  aria-describedby="button-addon1" value="/spain_products_ingredients.csv.zz"></input>
                 <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary" type="button" id="download-btn" data-mdb-ripple-color="dark">
                     Empezar
                 </button>

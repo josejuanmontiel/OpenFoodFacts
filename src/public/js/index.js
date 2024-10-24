@@ -1,3 +1,12 @@
+// Event listener para el botón
+function goToGrid() {
+    var filters = document.getElementById('filters').value;
+    localStorage.setItem("filters", filters);
+    window.location.href = "/grid.html";
+}
+
+document.getElementById("ya-se").addEventListener("click", goToGrid);
+
 // Función para parsear el CSV
 function parseCSV(data) {
     const lines = data.split("\n");
@@ -88,10 +97,10 @@ async function downloadAndLoadCSV() {
 
         console.log("Guardada")
 
-        window.location.href = "/grid.html";
+        goToGrid();
     } catch (error) {
         console.error("Error en la descarga o carga del CSV: ", error);
-        window.location.href = "/grid.html";
+        goToGrid();
     }
 }
 

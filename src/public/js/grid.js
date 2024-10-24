@@ -71,10 +71,62 @@ document.getElementById("query-btn").addEventListener("click", async () => {
         const result = await queryByCode(code);
         const resultContainer = document.getElementById("result");
         if (result) {
-            resultContainer.textContent = JSON.stringify(result, null, 2);  // Mostrar el resultado en formato JSON
+            const fuseOptions = {
+                // isCaseSensitive: false,
+                // includeScore: false,
+                // shouldSort: true,
+                // includeMatches: false,
+                // findAllMatches: false,
+                // minMatchCharLength: 1,
+                // location: 0,
+                // threshold: 0.6,
+                // distance: 100,
+                // useExtendedSearch: false,
+                // ignoreLocation: false,
+                // ignoreFieldNorm: false,
+                // fieldNormWeight: 1,
+                keys: [
+                    "ingredients_text"
+                ]
+            };
+            
+            var json = JSON.stringify(result, null, 2);
+
+            var data = [ 
+                { 
+                "answer_content": "2322323", 
+                "user_id": 49, 
+                "ingredients_text": "nicht" 
+                }, 
+                { 
+                "answer_content": "22222", 
+                "user_id": 50, 
+                "ingredients_text": "soemthing" 
+                } 
+                ];
+                
+                var mapped = data.map(function(obj) {
+                  return {
+                    "answer_content": obj.answer_content,
+                         "author": {
+                           "user_id": obj.user_id,
+                         },
+                         "ingredients_text": obj.ingredients_text};
+                  
+                });
+
+            const fuse = new Fuse(mapped, fuseOptions);
+            
+            // Change the pattern
+            const searchPattern = localStorage.getItem("filters");
+            
+            var resultSearch =  fuse.search(searchPattern)
+    
+            resultContainer.textContent += "Coincide con algun ingrediente" + resultSearch;
         } else {
             resultContainer.textContent = "No se encontró ningún resultado para el código: " + code;
         }
+
     } catch (error) {
         console.error("Error al consultar: ", error);
     }
