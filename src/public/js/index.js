@@ -1,3 +1,8 @@
+const valores = localStorage.getItem("filters");
+if (valores!=null && valores.length>0) {
+    document.getElementById("filters").textContent = valores;
+}
+
 // Event listener para el botón
 function goToGrid() {
     var filters = document.getElementById('filters').value;
@@ -9,17 +14,20 @@ document.getElementById("ya-se").addEventListener("click", goToGrid);
 
 // Función para parsear el CSV
 function parseCSV(data) {
-    const lines = data.split("\n");
+    // Separar líneas
+    const lines = data.split("\n").filter(line => line.trim() !== ""); // Ignorar líneas vacías
     const result = [];
 
+    // Obtener los encabezados de la primera línea y quitar espacios
     const headers = lines[0].split(",").map(header => header.trim());
 
     for (let i = 1; i < lines.length; i++) {
         const obj = {};
-        const currentLine = lines[i].split(",");
+        const currentLine = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // Expresión regular para comas en comillas
 
         headers.forEach((header, index) => {
-            obj[header] = currentLine[index] ? currentLine[index].trim() : null;
+            // Asignar valores, asegurando que estén limpios de espacios
+            obj[header] = currentLine[index] ? currentLine[index].trim().replace(/^"|"$/g, '') : null;
         });
 
         result.push(obj);
@@ -27,6 +35,7 @@ function parseCSV(data) {
 
     return result;
 }
+
 
 // Función para inicializar IndexedDB
 // Repetida en grid.js

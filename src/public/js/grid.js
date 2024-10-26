@@ -69,60 +69,24 @@ document.getElementById("query-btn").addEventListener("click", async () => {
     const code = document.getElementById("code-input").value;  // Obtener el código del input
     try {
         const result = await queryByCode(code);
-        const resultContainer = document.getElementById("result");
         if (result) {
-            const fuseOptions = {
-                // isCaseSensitive: false,
-                // includeScore: false,
-                // shouldSort: true,
-                // includeMatches: false,
-                // findAllMatches: false,
-                // minMatchCharLength: 1,
-                // location: 0,
-                // threshold: 0.6,
-                // distance: 100,
-                // useExtendedSearch: false,
-                // ignoreLocation: false,
-                // ignoreFieldNorm: false,
-                // fieldNormWeight: 1,
-                keys: [
-                    "ingredients_text"
-                ]
-            };
+            const debugJson = document.getElementById("json");
+            debugJson.textContent = JSON.stringify(result, null, 2);
+            // var arrayDeObjetos = Array.from(JSON.parse(json));
             
-            var json = JSON.stringify(result, null, 2);
+            const valores = localStorage.getItem("filters");
+            
+            const regex = new RegExp(`(${valores})`, 'gi');
 
-            var data = [ 
-                { 
-                "answer_content": "2322323", 
-                "user_id": 49, 
-                "ingredients_text": "nicht" 
-                }, 
-                { 
-                "answer_content": "22222", 
-                "user_id": 50, 
-                "ingredients_text": "soemthing" 
-                } 
-                ];
-                
-                var mapped = data.map(function(obj) {
-                  return {
-                    "answer_content": obj.answer_content,
-                         "author": {
-                           "user_id": obj.user_id,
-                         },
-                         "ingredients_text": obj.ingredients_text};
-                  
-                });
+            const resultSearch = result.ingredients_text.match(regex);
+            const resultContainer = document.getElementById("result");
+            if (resultSearch!=null) {
+                resultContainer.innerHTML += "<pre id=º\"json\">Encontrado:" + resultSearch + 
+                                               " en " + result.ingredients_text.replace(regex, '<mark>$1</mark>') + "</pre>";
+            } else {
+                resultContainer.textContent += "No se encontro en los ingredientes, nada de la lista.";
+            }
 
-            const fuse = new Fuse(mapped, fuseOptions);
-            
-            // Change the pattern
-            const searchPattern = localStorage.getItem("filters");
-            
-            var resultSearch =  fuse.search(searchPattern)
-    
-            resultContainer.textContent += "Coincide con algun ingrediente" + resultSearch;
         } else {
             resultContainer.textContent = "No se encontró ningún resultado para el código: " + code;
         }
@@ -131,3 +95,18 @@ document.getElementById("query-btn").addEventListener("click", async () => {
         console.error("Error al consultar: ", error);
     }
 });
+
+// Event listener para el botón
+function goToScan() {
+    window.location.href = "/scan.html";
+}
+document.getElementById("scan-btn").addEventListener("click", goToScan);
+
+// Obtener los parámetros de la URL
+const parametros = new URLSearchParams(window.location.search);
+// Leer un parámetro específico, por ejemplo "nombre"
+const codeFromUrl = parametros.get('code');
+if (codeFromUrl!=null && codeFromUrl.length>0) {
+    document.getElementById("code-input").value = codeFromUrl;
+    document.getElementById("query-btn").click();
+}

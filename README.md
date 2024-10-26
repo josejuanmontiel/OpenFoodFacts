@@ -28,8 +28,8 @@ Usaremos los datos de OpenFoodFacts que se pueden descargar desde [aqui](https:/
 ### Barcode
 Estos datos los almacenaremos en la IndexedDB del navegador usando su API estandar, teniendo como clave el codigo de barras. Y para escanear los codigos de barras usaremos la libreria [html5-qrcode](https://github.com/mebjas/html5-qrcode)
 
-### Proximo pasos
-- Pagina inicial de explicacion
+### Relese v0.2
+En esta segunda release se incluiran:
 
     1. Breve explicacion de que no hay servidor en la primera pagina.
     2. Boton de carga (y opcion futura de carga diferencial ahora que tendria el timestamp) en la primera pagina (descompresion).
@@ -38,3 +38,5 @@ Estos datos los almacenaremos en la IndexedDB del navegador usando su API estand
     5. Tras la carga o eleccion de empezar a comprar (con datos almacenados) vamos a la segunda pagina.
     6. Añadir tabla para mostar los elementos que se van escanenado con [esta](https://tabulator.info/examples/6.3#fittodata) libreria.
     7. Meter la opcion de borrar lineas y opcion de añadir precios, y tener la suma total.
+
+### Relese v0.3
